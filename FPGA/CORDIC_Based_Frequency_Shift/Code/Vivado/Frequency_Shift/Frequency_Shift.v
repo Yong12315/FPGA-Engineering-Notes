@@ -96,7 +96,7 @@ end
 wire                                    cordic_Result_Val           ;
 wire                 [  47: 0]          cordic_Result               ;
 
-// Latency = 23
+// CORDIC IP Latency = 23
 Frequency_Shift_CORDIC u_Frequency_Shift_CORDIC (
     .aclk                               (Clk                       ),// input wire aclk
     .s_axis_phase_tvalid                (Rotate_Phase_Val          ),// input wire s_axis_phase_tvalid

@@ -17,6 +17,7 @@ module Rortate_Phase_Cal (
 wire               [  63: 0]        Div_Result                  ;
 wire                                Div_Result_Val              ;
 
+// Divider Generator IP
 Freqency_Shift_Div u_Freqency_Shift_Div (
     .aclk                               (Clk                       ),// input wire aclk
     .s_axis_divisor_tvalid              (IQ_tvalid_Reg             ),// input wire s_axis_divisor_tvalid
