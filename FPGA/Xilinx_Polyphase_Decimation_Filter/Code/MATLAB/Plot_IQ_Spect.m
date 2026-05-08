@@ -50,5 +50,5 @@ grid on;
 xlabel('Frequency (MHz)');
 ylabel('Magnitude (dB)');
 title('IQ Result Spectrum');
-xlim([-20 20]);
+xlim([-7.68 7.68]);
 ylim([-100 5]);

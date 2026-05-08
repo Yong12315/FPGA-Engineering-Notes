@@ -10,11 +10,15 @@
 
 如下图所示，8 抽头 FIR 后接 4 倍抽取时，FIR 先得到连续输出 y0、y1、y2、……，而抽取后只保留 y0、y4、y8、……，中间输出最终都会被丢弃。
 
-![Trad_Decimation_FIR](./Image/Trad_Decimation_FIR.png)
+<p align="center">
+  <img src="./Images/Trad_Decimation_FIR.png" alt="Trad_Decimation_FIR" width="600">
+</p>
 
 多相抽取滤波器是在传统结构基础上的一种等效优化实现。它利用“抽取后只保留部分输出采样点”这一特点，将原 FIR 滤波器的系数按照抽取倍数 M 拆分为 M 个相位分支，并将滤波与抽取过程合并实现。这样，滤波器不再先计算所有输出再丢弃其中大部分结果，而是直接计算最终会被保留下来的输出采样点，从而减少无效运算。
 
-![Polyphase_Decimation_FIR](./Image/Polyphase_Decimation_FIR.png)
+<p align="center">
+  <img src="./Images/Polyphase_Decimation_FIR.png" alt="Polyphase_Decimation_FIR" width="600">
+</p>
 
 结合上面的多相抽取滤波器结构可以看到，原来的 8 个 FIR 系数被按照 4 倍抽取关系拆分成了 4 个相位分支。每个相位分支中只包含部分滤波器系数，例如第 0 相分支包含 C0、C4，第 1 相分支包含 C1、C5，第 2 相分支包含 C2、C6，第 3 相分支包含 C3、C7。这样，原本一个 8 抽头 FIR 滤波器就被等效拆分成了 4 个 2 抽头子滤波器。
 
@@ -26,7 +30,7 @@
 
 在 FPGA 中实现抽取滤波时，可以直接使用 Xilinx FIR Compiler IP。该 IP 已经集成了 FIR 滤波、多相抽取、AXI-Stream 数据接口等功能，只需要配置滤波器系数、抽取倍数、输入输出位宽等参数，就可以快速完成抽取滤波器的搭建。
 
-![FIR Compiler 0](./Image/FIR_Compiler_0.png)
+![FIR Compiler 0](./Images/FIR_Compiler_0.png)
 
 - Select Source：选择 COE File，表示使用外部 COE 文件作为滤波器系数来源。
 - Coefficient File：用于指定 COE 文件路径，FIR Compiler 会根据该文件中的系数生成对应的 FIR 滤波器。
@@ -35,13 +39,13 @@
 - Rate Change Type：选择 Integer，表示采样率变化为整数倍关系。
 - Decimation Rate Value：设置为 8，表示每输入 8 个采样点，输出 1 个滤波后的采样点，即实现 8 倍抽取。
 
-![FIR Compiler 1](./Image/FIR_Compiler_1.png)
+![FIR Compiler 1](./Images/FIR_Compiler_1.png)
 
 - Number of Paths：设置为 2，用于配置 FIR 内部的数据并行路径。由于 IQ 数据通常包含 I、Q 两路分量，设置为 2 条路径可以更好地适配并行数据处理需求。
 - Select Format：选择 Input Sample Period，表示使用输入采样周期来描述输入数据速率。
 - Sample Period：设置为 1，表示输入数据每 1 个时钟周期输入一个采样点。
 
-![FIR Compiler 2](./Image/FIR_Compiler_2.png)
+![FIR Compiler 2](./Images/FIR_Compiler_2.png)
 
 - Coefficient Type：选择 Signed，表示滤波器系数采用有符号数。
 - Quantization：选择 Quantize Only，表示 IP 只对导入的滤波器系数进行定点量化，不对系数进行额外缩放。
@@ -54,30 +58,40 @@
 - Output Rounding Mode：选择 Truncate LSBs，表示输出结果通过截断低位的方式缩短到目标位宽。
 - Output Width：设置为 17，表示 FIR 输出数据位宽为 17 bit。这里选择 17 bit 是为了完整保留滤波结果的整数位，避免输出截位导致滤波后信号幅度和能量变小。
 
-![FIR Compiler 3](./Image/FIR_Compiler_3.png)
+![FIR Compiler 3](./Images/FIR_Compiler_3.png)
 
 Detailed Implementation 页面主要用于配置 IP 的具体实现结构和资源优化方式，该页面一般保持默认配置即可。
 
-![FIR Compiler 4](./Image/FIR_Compiler_4.png)
+![FIR Compiler 4](./Images/FIR_Compiler_4.png)
 
 Interface 页面主要用于配置 FIR Compiler 的 AXI-Stream 接口。
 
 ## 3 仿真
 
-1. 运行MATLAB脚本IQ_Generator.m生成IQ数据IQ_Data.mem
+1. 运行 MATLAB 脚本 [IQ_Generator.m](./Code/MATLAB/IQ_Generator.m) 生成仿真输入数据。该脚本生成 1 MHz 和 20 MHz 两个复数单音信号叠加起来的一个信号，采样率为122.88MHz。并将 I/Q 数据按照低 16 位为 I、高 16 位为 Q 的格式打包，生成 [IQ_Data.mem](./Code/MATLAB/IQ_Data.mem) 文件作为仿真激励。
 
-   ![alt text](./Image/image.png)
+   ![IQ_Data](./Images/IQ_Data.png)
 
-2. 生成的IQ信号为两个信号10MHz单音和20MHz单音信号叠加的有两个频点的信号，采样率为122.88MHz。
+2. 对生成的原始 IQ 数据进行频谱分析，可以看到信号在 +5 MHz 和 +10 MHz 处各有一个单音峰值。
 
-    ![Origin_IQ_Spectrum](./Image/Origin_IQ_Spectrum.png)
+   <p align="center">
+     <img src="./Images/Origin_IQ_Spectrum.png" alt="Origin_IQ_Spectrum" width="700">
+   </p>
 
-3. 在Vivado工程中生成FIR Compiler IP，并导入抽头系数，这个FIR的通带范围为-Fs/16到Fs/16。
+3. 在 Vivado 中生成 FIR Compiler IP，并导入设计好的 [FIR 抽头系数](./Code/Vivado/FIR_COE/DDC_FIR.coe)。该滤波器为复基带 8 倍抽取低通 FIR，通带范围为 -Fs/16 到 +Fs/16，即 -7.68 MHz 到 +7.68 MHz。
 
-    ![FIR Frequency Response](./Image/FIR_Frequency_Response.png)
+    ![FIR Frequency Response](./Images/FIR_Frequency_Response.png)
 
-4. 根据第二章FPGA实现抽取滤波配置完FIR滤波器。
+4. 根据第二章FPGA实现抽取滤波配置完FIR滤波器，发现216抽头系数的FIR只用了30个DSP，资源大大减少。
 
-5. 
-6. 
+    ![Implement Resource](./Images/Implement_Resource.png)
 
+5. 在Vivado中运行[tb_FIR.v](./Code/Vivado/tb_FIR.v)。仿真过程中，testbench 读取 IQ_Data.mem 中的 IQ 数据，并将其送入FIR模块。本次仿真输入的信号是1MHz和20MHz叠加的信号，经过FIR模块会滤除20MHz信号，只保留下1MHz的信号，同时采样率也会从原来的122.88MHz将为原来的1/8 15.36MHz。仿真结束后，FIR输出的滤波后的 IQ 数据会保存到 [IQ_Result.txt](./Code/Vivado/Frequency_Shift/IQ_Result.txt)，用于后续 MATLAB 频谱分析。
+
+   ![Modelsim](./Images/Modelsim.png)
+
+6. 使用 MATLAB 脚本[Plot_IQ_Spect.m](./Code/MATLAB/Plot_IQ_Spect.m)读取 IQ_Result.txt，并对变频后的 IQ 数据进行 FFT 分析。从频谱结果可以看出信号从原来的1MHz和20MHz两个频点变成了只有1MHz一个频点，说明FIR模块能够将高频信号滤除，功能正常。
+
+   <p align="center">
+     <img src="./Images/IQ_Result_Spectrum.png" alt="IQ_Result_Spectrum" width="700">
+   </p>

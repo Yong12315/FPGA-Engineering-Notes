@@ -2,8 +2,8 @@ clc; clear; close all;
 
 %% 参数设置
 fs = 122.88e6;     % 采样率 122.88 MHz
-f1 = 5e6;         % 第一个复数单音 10 MHz
-f2 = 10e6;         % 第二个复数单音 20 MHz
+f1 = 1e6;         % 第一个复数单音 10 MHz
+f2 = 20e6;         % 第二个复数单音 20 MHz
 
 Scale = 1000;
 N = 20000;          % 采样点数
@@ -25,14 +25,14 @@ Q_u16 = typecast(Q(:), 'uint16');
 
 packed_data = bitor(uint32(I_u16),bitshift(uint32(Q_u16), 16));
 
-packed_hex = dec2hex(packed_data, 8);
+packed_hex = string(dec2hex(packed_data, 8));
 
 %% 输出文件
 
 % 1) 输出32bit十六进制，每行一个样点
 fid = fopen('IQ_Data.mem', 'w');
 for k = 1:length(packed_hex)
-    fprintf(fid, '%08X\n', packed_hex(k));
+    fprintf(fid, '%s\n', packed_hex(k));
 end
 fclose(fid);
 
@@ -47,7 +47,7 @@ grid on;
 xlabel('Time / us');
 ylabel('Amplitude');
 legend('I', 'Q');
-title('IQ Signal: 10 MHz + 20 MHz Complex Tones');
+title('IQ Signal: 1 MHz + 20 MHz Complex Tones');
 
 %% 频谱分析
 Nfft = 8192;

@@ -41,9 +41,10 @@ initial begin
 end
 
 integer fid_result;
+localparam RESULT_FILE = "E:/Xilinx/Vivado_Project/Frequency_Shift/sim/IQ_Result.txt";
 
 initial begin
-    fid_result = $fopen("IQ_Result.txt", "w");
+    fid_result = $fopen(RESULT_FILE, "w");
     if (fid_result == 0) begin
         $display("ERROR: Cannot open IQ_Result.txt");
         $finish;
