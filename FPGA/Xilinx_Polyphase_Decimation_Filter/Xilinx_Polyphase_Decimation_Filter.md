@@ -2,7 +2,7 @@
 
 在 FPGA 信号处理中，降采样是一个很常见的需求。抽取滤波器可以在降低采样率的同时完成抗混叠低通滤波。Xilinx FIR Compiler IP 支持多相抽取结构，能够将滤波与抽取过程合并实现，适合用于高效的 FPGA 降采样设计。
 
-## 1. 多相抽取滤波器原理
+## 1 多相抽取滤波器原理
 
 传统抽取滤波器通常采用“FIR 低通滤波 + M 倍抽取”的级联结构。输入信号先经过 FIR 滤波，然后抽取模块每 M 个输出采样点保留 1 个。
 
@@ -86,11 +86,11 @@ Interface 页面主要用于配置 FIR Compiler 的 AXI-Stream 接口。
 
     ![Implement Resource](./Images/Implement_Resource.png)
 
-5. 在 Vivado 中运行 [tb_FIR.v](./Code/Vivado/tb_FIR.v) 进行功能仿真。仿真过程中，testbench 读取 `IQ_Data.mem` 中的 IQ 数据，并将其送入 FIR 模块。由于输入信号由 1 MHz 和 20 MHz 两个单音分量叠加得到，经过 FIR 抽取滤波后，通带内的 1 MHz 分量会被保留，通带外的 20 MHz 分量会被抑制。同时，输出采样率由原来的 122.88 MHz 降为 15.36 MHz，即变为原采样率的 1/8。仿真结束后，FIR 输出的 IQ 数据会保存到 [IQ_Result.txt](./Code/Vivado/Frequency_Shift/IQ_Result.txt)，用于后续 MATLAB 频谱分析。
+5. 在 Vivado 中运行 [tb_FIR.v](./Code/Vivado/tb_FIR.v) 进行功能仿真。仿真过程中，testbench 读取 `IQ_Data.mem` 中的 IQ 数据，并将其送入 FIR 模块。由于输入信号由 1 MHz 和 20 MHz 两个单音分量叠加得到，经过 FIR 抽取滤波后，通带内的 1 MHz 分量会被保留，通带外的 20 MHz 分量会被抑制。同时，输出采样率由原来的 122.88 MHz 降为 15.36 MHz，即变为原采样率的 1/8。仿真结束后，FIR 输出的 IQ 数据会保存到 [IQ_Result.txt](./Code/Vivado/IQ_Result.txt)，用于后续 MATLAB 频谱分析。
 
    ![Modelsim](./Images/Modelsim.png)
 
-6. 使用 MATLAB 脚本 [Plot_IQ_Spect.m](./Code/MATLAB/Plot_IQ_Spect.m) 读取 `IQ_Result.txt`，并对 FIR 输出数据进行 FFT 分析。从频谱结果可以看到，原始信号中的 20 MHz 分量被明显滤除，最终主要保留 1 MHz 分量，说明 FIR Compiler IP 实现的多相抽取低通滤波器功能正常。
+6. 使用 MATLAB 脚本 [Plot_IQ_Spect.m](./Code/MATLAB/Plot_IQ_Spect.m) 读取 `IQ_Result.txt`，并对 FIR 输出数据进行 FFT 分析。从频谱结果可以看到，原始信号中的 20 MHz 分量被明显抑制，输出信号主要保留 1 MHz 分量，说明 FIR Compiler IP 实现的多相抽取低通滤波器功能正常。
 
    <p align="center">
      <img src="./Images/IQ_Result_Spectrum.png" alt="IQ_Result_Spectrum" width="700">
