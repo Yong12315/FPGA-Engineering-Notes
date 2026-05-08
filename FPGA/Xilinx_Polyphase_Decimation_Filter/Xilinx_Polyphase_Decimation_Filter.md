@@ -20,7 +20,7 @@
   <img src="./Images/Polyphase_Decimation_FIR.png" alt="Polyphase_Decimation_FIR" width="600">
 </p>
 
-结合上面的多相抽取滤波器结构可以看到，原来的 8 个 FIR 系数被按照 4 倍抽取关系拆分成了 4 个相位分支。每个相位分支中只包含部分滤波器系数，例如第 0 相分支包含 C0、C4，第 1 相分支包含 C1、C5，第 2 相分支包含 C2、C6，第 3 相分支包含 C3、C7。这样，原本一个 8 抽头 FIR 滤波器就被等效拆分成了 4 个 2 抽头子滤波器。
+结合上面的多相抽取滤波器结构可以看到，原来的 8 个 FIR 系数被按照 4 倍抽取关系拆分成了 4 个相位分支。每个相位分支中只包含部分滤波器系数，例如第 1 相分支包含 C0、C4，第 2 相分支包含 C1、C5，第 3 相分支包含 C2、C6，第 4 相分支包含 C3、C7。这样，原本一个 8 抽头 FIR 滤波器就被等效拆分成了 4 个 2 抽头子滤波器。
 
 输入数据按照抽取相位依次进入不同分支进行滤波，各相位分支完成乘加运算后，在输出端累加得到最终抽取结果。以 8 抽头 FIR、4 倍抽取为例，原滤波器被拆分为 4 个 2 抽头子滤波器，因此每拍只需要 2 个乘法器完成当前相位计算，而不需要像传统 8 抽头全并行 FIR 那样每拍使用 8 个乘法器计算完整速率输出。由于输出端只产生 y0、y4、y8、…… 这些抽取后保留的采样点，多相结构避免了先计算 y1、y2、y3 等中间结果再丢弃的无效运算。
 
@@ -68,29 +68,29 @@ Interface 页面主要用于配置 FIR Compiler 的 AXI-Stream 接口。
 
 ## 3 仿真
 
-1. 运行 MATLAB 脚本 [IQ_Generator.m](./Code/MATLAB/IQ_Generator.m) 生成仿真输入数据。该脚本生成 1 MHz 和 20 MHz 两个复数单音信号叠加起来的一个信号，采样率为122.88MHz。并将 I/Q 数据按照低 16 位为 I、高 16 位为 Q 的格式打包，生成 [IQ_Data.mem](./Code/MATLAB/IQ_Data.mem) 文件作为仿真激励。
+1. 运行 MATLAB 脚本 [IQ_Generator.m](./Code/MATLAB/IQ_Generator.m) 生成仿真输入数据。脚本生成一个复数 IQ 信号，该信号由 1 MHz 和 20 MHz 两个单音分量叠加得到，并将 I/Q 数据按照低 16 位为 I、高 16 位为 Q 的格式打包，生成 [IQ_Data.mem](./Code/MATLAB/IQ_Data.mem) 文件作为仿真激励。
 
    ![IQ_Data](./Images/IQ_Data.png)
 
-2. 对生成的原始 IQ 数据进行频谱分析，可以看到信号在 +5 MHz 和 +10 MHz 处各有一个单音峰值。
+2. 对原始 IQ 数据进行频谱分析，可以看到信号在 +1 MHz 和 +20 MHz 处各有一个单音峰值。
 
    <p align="center">
      <img src="./Images/Origin_IQ_Spectrum.png" alt="Origin_IQ_Spectrum" width="700">
    </p>
 
-3. 在 Vivado 中生成 FIR Compiler IP，并导入设计好的 [FIR 抽头系数](./Code/Vivado/FIR_COE/DDC_FIR.coe)。该滤波器为复基带 8 倍抽取低通 FIR，通带范围为 -Fs/16 到 +Fs/16，即 -7.68 MHz 到 +7.68 MHz。
+3. 在 Vivado 中生成 FIR Compiler IP，并导入设计好的 [FIR 抽头系数](./Code/Vivado/FIR_COE/DDC_FIR.coe)。该滤波器为复基带 8 倍抽取低通 FIR，通带范围为 -Fs/16 到 +Fs/16。对于 122.88 MHz 的输入采样率，通带范围对应 -7.68 MHz 到 +7.68 MHz。
 
     ![FIR Frequency Response](./Images/FIR_Frequency_Response.png)
 
-4. 根据第二章FPGA实现抽取滤波配置完FIR滤波器，发现216抽头系数的FIR只用了30个DSP，资源大大减少。
+4. 根据第二章中的参数完成 FIR Compiler IP 配置后，该 216 抽头、8 倍抽取 FIR 仅使用了 30 个 DSP。由于多相结构只计算抽取后需要保留的输出采样点，因此可以显著降低 DSP 资源占用。
 
     ![Implement Resource](./Images/Implement_Resource.png)
 
-5. 在Vivado中运行[tb_FIR.v](./Code/Vivado/tb_FIR.v)。仿真过程中，testbench 读取 IQ_Data.mem 中的 IQ 数据，并将其送入FIR模块。本次仿真输入的信号是1MHz和20MHz叠加的信号，经过FIR模块会滤除20MHz信号，只保留下1MHz的信号，同时采样率也会从原来的122.88MHz将为原来的1/8 15.36MHz。仿真结束后，FIR输出的滤波后的 IQ 数据会保存到 [IQ_Result.txt](./Code/Vivado/Frequency_Shift/IQ_Result.txt)，用于后续 MATLAB 频谱分析。
+5. 在 Vivado 中运行 [tb_FIR.v](./Code/Vivado/tb_FIR.v) 进行功能仿真。仿真过程中，testbench 读取 `IQ_Data.mem` 中的 IQ 数据，并将其送入 FIR 模块。由于输入信号由 1 MHz 和 20 MHz 两个单音分量叠加得到，经过 FIR 抽取滤波后，通带内的 1 MHz 分量会被保留，通带外的 20 MHz 分量会被抑制。同时，输出采样率由原来的 122.88 MHz 降为 15.36 MHz，即变为原采样率的 1/8。仿真结束后，FIR 输出的 IQ 数据会保存到 [IQ_Result.txt](./Code/Vivado/Frequency_Shift/IQ_Result.txt)，用于后续 MATLAB 频谱分析。
 
    ![Modelsim](./Images/Modelsim.png)
 
-6. 使用 MATLAB 脚本[Plot_IQ_Spect.m](./Code/MATLAB/Plot_IQ_Spect.m)读取 IQ_Result.txt，并对变频后的 IQ 数据进行 FFT 分析。从频谱结果可以看出信号从原来的1MHz和20MHz两个频点变成了只有1MHz一个频点，说明FIR模块能够将高频信号滤除，功能正常。
+6. 使用 MATLAB 脚本 [Plot_IQ_Spect.m](./Code/MATLAB/Plot_IQ_Spect.m) 读取 `IQ_Result.txt`，并对 FIR 输出数据进行 FFT 分析。从频谱结果可以看到，原始信号中的 20 MHz 分量被明显滤除，最终主要保留 1 MHz 分量，说明 FIR Compiler IP 实现的多相抽取低通滤波器功能正常。
 
    <p align="center">
      <img src="./Images/IQ_Result_Spectrum.png" alt="IQ_Result_Spectrum" width="700">
