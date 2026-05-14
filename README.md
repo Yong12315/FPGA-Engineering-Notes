@@ -15,3 +15,6 @@ Just for Fun~
 
 - [基于 FIR Compiler IP 的多相抽取滤波器设计](./FPGA/Xilinx_Polyphase_Decimation_Filter/Xilinx_Polyphase_Decimation_Filter.md)  
   `2026-05-06` · `FPGA`
+
+- [2025唯易不易](./Year_End_Review/2025/2025.md)  
+  `2026-05-06` · `Year_End_Review`
