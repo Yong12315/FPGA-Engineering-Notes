@@ -1,5 +1,5 @@
 % 读入测试图
-img = imread('test_Img.png');     % ← 替换为你的文件名
+img = imread('Binary_Test_Image.png');     % ← 替换为你的文件名
 
 if size(img,3) == 3
     gray = rgb2gray(img);

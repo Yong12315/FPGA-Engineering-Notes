@@ -49,7 +49,7 @@ Vivado 2020.1, MATLAB R2021a
 | `ROWS` | `361` | 输入图像的行数 |
 | `COLS` | `478` | 输入图像的列数 |
 | `FRONT_PIX` | `1` | 输入图像的前景像素，仅能为 `0` 或 `1` |
-| `LABEL_WIDTH` | `8` | 连通域标签位宽，可标记的最大连通域数量为 $2^{LABEL_WIDTH}-1$ |
+| `LABEL_WIDTH` | `8` | 连通域标签位宽，可标记的最大连通域数量为 $2^{\text{LABEL\_WIDTH}}-1$ |
 | `IMG_SRC_PATH` | `./MATLAB/bin_2_txt/binaryImg.txt` | 输入图像数据的路径 |
 | `IMG_DST_PATH` | `./MATLAB/labeled_Img/labeled_Img.txt` | 标记后图像数据的输出路径 |
 
@@ -73,7 +73,9 @@ Vivado 2020.1, MATLAB R2021a
 
 2. 用 MATLAB 打开并运行脚本 `labeled_Img.m`。该脚本会读取 `labeled_Img.txt` 中的标记结果，并为每个连通域分配不同颜色，从而直观显示连通域标记结果。
 
-    ![Colored_Labeling_Result](./Images/Colored_Labeling_Result.png)
+   <p align="center">
+     <img src="./Images/Colored_Labeling_Result.png" alt="Colored_Labeling_Result" width="700">
+   </p>
 
 从显示结果可以看出，测试图像中的 7 个连通域均被正确区分，并被赋予了不同颜色，说明 FPGA 连通域标记模块的功能仿真结果正确。
 
