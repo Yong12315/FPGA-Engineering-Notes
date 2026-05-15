@@ -49,7 +49,7 @@ Vivado 2020.1, MATLAB R2021a
 | `ROWS` | `361` | 输入图像的行数 |
 | `COLS` | `478` | 输入图像的列数 |
 | `FRONT_PIX` | `1` | 输入图像的前景像素，仅能为 `0` 或 `1` |
-| `LABEL_WIDTH` | `8` | 连通域标签位宽，可标记的最大连通域数量为 $2^{\text{LABEL\_WIDTH}}-1$ |
+| `LABEL_WIDTH` | `8` | 连通域标签位宽，可标记的最大连通域数量为 $2^{LABEL\_WIDTH}-1$ |
 | `IMG_SRC_PATH` | `./MATLAB/bin_2_txt/binaryImg.txt` | 输入图像数据的路径 |
 | `IMG_DST_PATH` | `./MATLAB/labeled_Img/labeled_Img.txt` | 标记后图像数据的输出路径 |
 
