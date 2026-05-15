@@ -44,22 +44,24 @@ Vivado 2020.1, MATLAB R2021a
 
 2. 修改 `tb_labeler.v` 中的相关参数。
 
-| **参数名** | **默认值** | **说明** |
-| --- | --- | --- |
-| `ROWS` | `361` | 输入图像的行数 |
-| `COLS` | `478` | 输入图像的列数 |
-| `FRONT_PIX` | `1` | 输入图像的前景像素，仅能为 `0` 或 `1` |
-| `LABEL_WIDTH` | `8` | 连通域标签位宽，可标记的最大连通域数量为 $2^{LABEL\_WIDTH}-1$ |
-| `IMG_SRC_PATH` | `./MATLAB/bin_2_txt/binaryImg.txt` | 输入图像数据的路径 |
-| `IMG_DST_PATH` | `./MATLAB/labeled_Img/labeled_Img.txt` | 标记后图像数据的输出路径 |
+    | **参数名** | **默认值** | **说明** |
+    | --- | --- | --- |
+    | `ROWS` | `361` | 输入图像的行数 |
+    | `COLS` | `478` | 输入图像的列数 |
+    | `FRONT_PIX` | `1` | 输入图像的前景像素，仅能为 `0` 或 `1` |
+    | `LABEL_WIDTH` | `8` | 连通域标签位宽。由于 `0` 用于表示背景，因此最多可标记 $2^{LABEL\_WIDTH}-1$ 个前景连通域 |
+    | `IMG_SRC_PATH` | `./MATLAB/bin_2_txt/binaryImg.txt` | 输入图像数据的路径 |
+    | `IMG_DST_PATH` | `./MATLAB/labeled_Img/labeled_Img.txt` | 标记后图像数据的输出路径 |
+
+    将 `IMG_SRC_PATH` 设置为二值图数据 `binaryImg.txt` 的实际路径，将 `IMG_DST_PATH` 设置为标记后图像数据 `labeled_Img.txt` 的输出路径，其余参数保持默认值即可。
 
 将 `IMG_SRC_PATH` 设置为二值图数据 `binaryImg.txt` 的实际路径，将 `IMG_DST_PATH` 设置为标记后图像数据 `labeled_Img.txt` 的输出路径，其余参数保持默认值即可。
 
-3. 运行仿真工程。二值图数据会逐行输入连通域标记算法模块。整帧数据输入完毕后，算法输出的连通域数量 `num_label` 为 `7`，与测试图像中的实际连通域数量一致。
+1. 运行仿真工程。二值图数据会逐行输入连通域标记算法模块。整帧数据输入完毕后，算法输出的连通域数量 `num_label` 为 `7`，与测试图像中的实际连通域数量一致。
 
     ![FPGA_CCL_Simulation](./Images/FPGA_CCL_Simulation.png)
 
-4. 仿真结束后，标记后的图像数据 [labeled_Img.txt](./Code/MATLAB/labeled_Img/labeled_Img.txt) 会导出到 `IMG_DST_PATH` 指定的位置。文件中，背景像素标记为 `0`，不同连通域依次标记为 `1`、`2`、`3` 等。由于数据量较大，此处仅截取部分内容进行展示。
+2. 仿真结束后，标记后的图像数据 [labeled_Img.txt](./Code/MATLAB/labeled_Img/labeled_Img.txt) 会导出到 `IMG_DST_PATH` 指定的位置。文件中，背景像素标记为 `0`，不同连通域依次标记为 `1`、`2`、`3` 等。由于数据量较大，此处仅截取部分内容进行展示。
 
    <p align="center">
      <img src="./Images/Labeled_Image_Data.png" alt="Labeled_Image_Data" width="700">
