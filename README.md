@@ -10,6 +10,9 @@ Just for Fun~
 
 ## 目录
 
+- [基于 FPGA 的连通域标记](./FPGA/Connected_Component_Labeler/CCL.md)  
+  `2026-05-15` · `FPGA`
+
 - [基于 FIR Compiler IP 的多相抽取滤波器设计](./FPGA/Xilinx_Polyphase_Decimation_Filter/Xilinx_Polyphase_Decimation_Filter.md)  
   `2026-05-06` · `FPGA`
 

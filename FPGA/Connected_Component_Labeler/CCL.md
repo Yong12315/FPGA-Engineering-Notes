@@ -34,7 +34,9 @@ Vivado 2020.1, MATLAB R2021a
 
 2. 用 MATLAB 打开并运行脚本 `bin_2_txt.m`。该脚本会读取 `Binary_Test_Image.png`，并将其转换为二值图数据文件 `binaryImg.txt`。其中，背景像素用 `0` 表示，前景像素用 `1` 表示。由于原始图像大小为 361 × 478，数据量较大，本文仅截取部分内容进行展示。
 
-    ![binaryImg](./Images/binaryImg.png)
+   <p align="center">
+     <img src="./Images/binaryImg.png" alt="binaryImg" width="700">
+   </p>
 
 ### 3.3 建立 FPGA 仿真工程
 
@@ -59,7 +61,9 @@ Vivado 2020.1, MATLAB R2021a
 
 4. 仿真结束后，标记后的图像数据 [labeled_Img.txt](./Code/MATLAB/labeled_Img/labeled_Img.txt) 会导出到 `IMG_DST_PATH` 指定的位置。文件中，背景像素标记为 `0`，不同连通域依次标记为 `1`、`2`、`3` 等。由于数据量较大，此处仅截取部分内容进行展示。
 
-    ![Labeled_Image_Data](./Images/Labeled_Image_Data.png)
+   <p align="center">
+     <img src="./Images/Labeled_Image_Data.png" alt="Labeled_Image_Data" width="700">
+   </p>
 
 ### 3.4 显示标记后的图像
 
