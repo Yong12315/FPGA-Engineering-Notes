@@ -6,7 +6,7 @@
 
 I/O端口可以配置为两种模式：Condensed I/O或Initiator/Target。Initiator/Target端口类型将请求事务和响应事务分别处理，因此共有4个AXI4-Stream通道用于I/O事务的传输。Initiator/Target端口的示意图如下所示。
 
-<img src="./Images/IO_Port.png" alt="IO Port" width="600">
+<img src="./Images/IO_Port.png" alt="IO Port" width="400">
 
 本地设备生成的请求通过ireq通道发送，远程设备产生的响应包通过iresp通道接收。
 
@@ -26,8 +26,8 @@ SRIO Gen2 IP的I/O端口可以配置为使用HELLO格式包或SRIO Stream格式�
 
 如图不同的I/O事务对应不同的包头。
 
-<img src="./Images/HELLO_Detail_1.png" alt="HELLO Detail 1" width="600">
-<img src="./Images/HELLO_Detail_2.png" alt="HELLO Detail 2" width="600">
+<img src="./Images/HELLO_Detail_1.png" alt="HELLO Detail 1" width="700">
+<img src="./Images/HELLO_Detail_2.png" alt="HELLO Detail 2" width="700">
 
 如果请求事务的数据量超过8字节，应将数据量调整为最接近的支持值。读写事务中支持的 HELLO 格式数据量为：8、16、32、64、96（仅支持读事务）、128、160（仅支持读事务）、192（仅支持读事务）、224（仅支持读事务）和 256 字节。
 
@@ -35,7 +35,7 @@ HELLO格式数据的包头在用户接口的第一个有效时钟上发送。如
 
 下图显示了携带数据负载的HELLO格式包在用户接口上传输的时序图。该图展示了32字节数据负载的传输，加上包头，整个传输共花费5个时钟周期。用户只需按照类似下图的时序，将想要发送的数据送入IP核的AXI4-Stream接口，IP核便会将其转换为标准的RapidIO串行物理层包进行发送，接收过程则是发送过程的逆过程。
 
-<img src="./Images/HELLO_Packet_Transfer.png" alt="HELLO Packet Transfer" width="600">
+<img src="./Images/HELLO_Packet_Transfer.png" alt="HELLO Packet Transfer" width="400">
 
 ## 3 IP核配置
 
