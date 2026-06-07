@@ -21,3 +21,6 @@ Just for Fun~
 
 - [2025唯易不易](./Year_End_Review/2025/2025.md)  
   `2026-02-16` · `Year_End_Review`
+
+- [Vivado SRIO Gen2 IP 解析](./FPGA/Vivado_SRIO_Gen2_IP/Vivado_SRIO_Gen2_IP.md)  
+  `2026-02-16` · `Year_End_Review`
