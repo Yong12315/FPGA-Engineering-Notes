@@ -95,18 +95,20 @@ Xilinx FPGA 实现 FFT 计算时可以直接调用 IP 核 Fast Fourier Transform
 
 **Detailed Implementation** 标签页用于设置 FFT IP 的具体资源实现方式，例如存储资源和乘法器资源等。一般情况下保持默认配置即可，由 Vivado 根据当前 FFT 点数、吞吐率和目标时钟频率自动选择合适的实现方案。
 
-### 2.2 幅度谱计算
+### 2.2 仿真数据生成
 
 1. 首先运行 MATLAB 脚本 [IQ_Generator.m](./Code/MATLAB/IQ_Generator.m)，生成用于仿真的 IQ 数据。生成后的数据会保存到 [IQ_Data.mem](./Code/MATLAB/IQ_Data.mem) 文件中，作为后续 FPGA 仿真的输入激励。
 
    ![IQ Data](./Images/IQ_Data.png)
 
-2. MATLAB 生成的测试信号为采样率 122.88 MHz 的 OFDM 调制复基带信号，其频谱分布在 -20 MHz 到 +20 MHz 范围内，可用于验证FPGA 的幅度谱计算的正确性。
+2. MATLAB 生成的测试信号为采样率 122.88 MHz 的 OFDM 调制复基带信号，其频谱分布在 -20 MHz 到 +20 MHz 范围内，可用于验证 FPGA 的幅度谱计算的正确性。
 
    ![OFDM IQ Spectrum](./Images/OFDM_IQ_Spectrum.png)
 
-3. 在 Vivado 中运行仿真文件 [tb_Full_Band_PowerSpec.v](./Code/Vivado/tb_Full_Band_PowerSpec.v)，仿真过程中，testbench 读取 IQ_Data.mem 中的 IQ 数据，并将其送入FFT IP核，IP核的计算结果再输入到幅度谱计算模块，最终能够计算出幅度谱。
+### 2.3 Vivado 仿真验证
+
+1. 在 Vivado 中运行仿真文件 [tb_Full_Band_PowerSpec.v](./Code/Vivado/tb_Full_Band_PowerSpec.v)，仿真过程中，testbench 读取 IQ_Data.mem 中的 IQ 数据，并将其送入 FFT IP 核，FFT IP 核的计算结果再输入到幅度谱计算模块，最终能够计算出幅度谱。
 
    ![Sim Result](./Images/Sim_Result.png)
 
-4. 从仿真结果可以看到，FPGA 计算得到的幅度谱在频率分布上与 MATLAB 计算结果基本一致，主信号带宽均集中在 -20 MHz 到 +20 MHz 范围内。由于 FPGA 端采用 αMax + βMin 近似求模算法，因此幅度值与 MATLAB 中精确平方开方计算结果会存在一定误差，但频谱包络和频点强弱关系保持一致，能够满足后续频谱显示和门限检测需求。
+2. 从仿真结果可以看到，FPGA 计算得到的幅度谱在频率分布上与 MATLAB 计算结果基本一致，主信号带宽均集中在 -20 MHz 到 +20 MHz 范围内。由于 FPGA 端采用 αMax + βMin 近似求模算法，因此幅度值与 MATLAB 中精确平方开方计算结果会存在一定误差，但频谱包络和频点强弱关系保持一致，能够满足后续频谱显示和门限检测需求。
