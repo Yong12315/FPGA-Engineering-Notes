@@ -28,5 +28,5 @@ Just for Fun~
 - [FPGA 端口静态时序分析](./FPGA/FPGA_IO_Timing_Analysis/FPGA_IO_Timing_Analysis.md)  
   `2026-01-28` · `FPGA`
 
-  - [Vivado SRIO Gen2 IP 解析](./FPGA/Vivado_SRIO_Gen2_IP/Vivado_SRIO_Gen2_IP.md)  
+- [Vivado SRIO Gen2 IP 解析](./FPGA/Vivado_SRIO_Gen2_IP/Vivado_SRIO_Gen2_IP.md)  
   `2024-09-24` · `FPGA`
