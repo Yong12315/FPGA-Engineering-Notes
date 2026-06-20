@@ -62,7 +62,7 @@ $$
 
 1. 首先运行 MATLAB 脚本 [IQ_Generator.m](./Code/MATLAB/IQ_Generator.m)，生成用于仿真的 IQ 数据。生成后的数据会保存到 [IQ_Data.mem](./Code/MATLAB/IQ_Data.mem) 文件中，作为后续 FPGA 仿真的输入激励。
 
-   ![Figure_5](./Images/Figure_5.png)
+   ![IQ Data](./Images/IQ_Data.png)
 
 2. MATLAB 生成的测试信号为采样率 122.88 MHz 的 OFDM 调制复基带信号，其频谱主要分布在 -5 MHz 到 +5 MHz 范围内，可用于验证数字变频模块对复基带信号的频谱搬移效果。
 
