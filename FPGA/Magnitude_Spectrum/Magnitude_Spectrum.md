@@ -107,7 +107,7 @@ Xilinx FPGA 实现 FFT 计算时可以直接调用 IP 核 Fast Fourier Transform
 
 ### 2.3 Vivado 仿真验证
 
-1. 在 Vivado 中运行仿真文件 [tb_Full_Band_PowerSpec.v](./Code/Vivado/tb_Full_Band_PowerSpec.v)，仿真过程中，testbench 读取 IQ_Data.mem 中的 IQ 数据，并将其送入 FFT IP 核，FFT IP 核的计算结果再输入到幅度谱计算模块，最终能够计算出幅度谱。
+1. 在 Vivado 中运行仿真文件 [tb_Full_Band_PowerSpec.v](./Code/Vivado/tb_Full_Band_PowerSpec.v)，仿真过程中，testbench 读取 IQ_Data.mem 中的 IQ 数据，并将其送入 FFT IP 核，FFT IP 核的计算结果再输入到幅度谱计算模块[Full_Band_PowerSpec.v](./Code/Vivado/Full_Band_PowerSpec.v)，最终能够计算出幅度谱。
 
    ![Sim Result](./Images/Sim_Result.png)
 
