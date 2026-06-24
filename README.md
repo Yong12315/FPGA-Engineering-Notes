@@ -1,32 +1,54 @@
-# Yong's Blog
+# FPGA Engineering Notes | FPGA 工程笔记
 
-Just for Fun~
+你好，这里是我的个人工程笔记。
 
-你好，这里是我的博客仓库。  
-我是一名 FPGA 工程师，平时喜欢冥想、健身和滑雪。  
-这里会记录一些工作中的心得、技术笔记，还有一些慢慢整理出来的文章。
+这个仓库主要记录我在工作和技术实践中的一些思考与总结，包括设计思路、实现过程、仿真验证、问题排查，以及对相关技术的学习与探索。部分文章会附带源码、测试代码、脚本和完整的验证过程，希望这些记录不仅能帮助我沉淀经验，也能为遇到类似问题的开发者提供参考。
+
+除了技术内容，这里也会收录一些关于工作、成长和生活的个人文章。
 
 ---
 
-## 目录
+## 技术笔记
 
-- [基于 FPGA 的幅度谱计算与仿真验证](./FPGA/Magnitude_Spectrum/Magnitude_Spectrum.md)  
-  `2026-06-15` · `FPGA`
+### 数字信号处理
 
-- [基于 FPGA 的连通域标记与仿真验证](./FPGA/Connected_Component_Labeler/CCL.md)  
-  `2026-05-15` · `FPGA`
+* [基于 FPGA 的幅度谱计算与仿真验证](./FPGA/Magnitude_Spectrum/Magnitude_Spectrum.md)
+  `2026-06-15`
 
-- [基于 FIR Compiler IP 的多相抽取滤波器设计](./FPGA/Xilinx_Polyphase_Decimation_Filter/Xilinx_Polyphase_Decimation_Filter.md)  
-  `2026-05-06` · `FPGA`
+* [基于 FIR Compiler IP 的多相抽取滤波器设计](./FPGA/Xilinx_Polyphase_Decimation_Filter/Xilinx_Polyphase_Decimation_Filter.md)
+  `2026-05-06`
 
-- [基于CORDIC优化的FPGA数字变频设计](./FPGA/CORDIC_Based_Frequency_Shift/CORDIC_Based_Frequency_Shift.md)  
-  `2026-04-17` · `FPGA`
+* [基于 CORDIC 优化的 FPGA 数字变频设计](./FPGA/CORDIC_Based_Frequency_Shift/CORDIC_Based_Frequency_Shift.md)
+  `2026-04-17`
 
-- [2025唯易不易](./Year_End_Review/2025/2025.md)  
-  `2026-02-16` · `Year_End_Review`
+### 图像处理
 
-- [FPGA 端口静态时序分析](./FPGA/FPGA_IO_Timing_Analysis/FPGA_IO_Timing_Analysis.md)  
-  `2026-01-28` · `FPGA`
+* [基于 FPGA 的连通域标记与仿真验证](./FPGA/Connected_Component_Labeler/CCL.md)
+  `2026-05-15`
 
-- [Vivado SRIO Gen2 IP 解析](./FPGA/Vivado_SRIO_Gen2_IP/Vivado_SRIO_Gen2_IP.md)  
-  `2024-09-24` · `FPGA`
+### 接口与协议
+
+* [Vivado SRIO Gen2 IP 解析](./FPGA/Vivado_SRIO_Gen2_IP/Vivado_SRIO_Gen2_IP.md)
+  `2024-09-24`
+
+### 时序与工程实践
+
+* [FPGA 端口静态时序分析](./FPGA/FPGA_IO_Timing_Analysis/FPGA_IO_Timing_Analysis.md)
+  `2026-01-28`
+
+---
+
+## 工程之外
+
+这里记录一些关于工作、成长和生活的个人文章。
+
+### 年度总结
+
+* [2025：唯易不易](./Year_End_Review/2025/2025.md)
+  `2026-02-16`
+
+---
+
+这个仓库会持续整理和更新。文章中的实现方式、工具版本和设计结论，也可能随着后续实践不断补充和修正。
+
+如果文章或代码对你有所帮助，欢迎点一个 Star。也欢迎通过 Issue 交流问题或提出建议。
