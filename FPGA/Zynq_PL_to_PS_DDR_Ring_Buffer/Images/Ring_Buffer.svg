@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="650" viewBox="0 0 1400 650">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#536277"/>
+    </marker>
+    <marker id="arrow-orange" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#ef7627"/>
+    </marker>
+    <style>
+      text { font-family: "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif; fill: #172033; }
+      .title { font-size: 32px; font-weight: 700; }
+      .slot { font-size: 23px; font-weight: 700; }
+      .small { font-size: 17px; fill: #536277; }
+      .note { font-size: 20px; font-weight: 700; }
+    </style>
+  </defs>
+
+  <rect width="1400" height="650" fill="#ffffff"/>
+  <text x="700" y="48" text-anchor="middle" class="title">单通道 DDR Ring Buffer 地址组织</text>
+  <text x="700" y="80" text-anchor="middle" class="small">示例：5 个逻辑槽，每槽保存 1 秒、40 MB 数据</text>
+
+  <g transform="translate(95,160)">
+    <g>
+      <rect x="0" y="0" width="210" height="260" rx="10" fill="#eaf7ed" stroke="#1f7a3a" stroke-width="2"/>
+      <text x="105" y="38" text-anchor="middle" class="slot">槽 0</text>
+      <line x1="0" y1="70" x2="210" y2="70" stroke="#1f7a3a"/>
+      <line x1="0" y1="165" x2="210" y2="165" stroke="#1f7a3a"/>
+      <text x="105" y="112" text-anchor="middle" class="small">前半槽 20 MB</text>
+      <text x="105" y="207" text-anchor="middle" class="small">后半槽 20 MB</text>
+      <text x="105" y="244" text-anchor="middle" class="small">BASE + 0 × 40 MB</text>
+    </g>
+
+    <g transform="translate(240,0)">
+      <rect x="0" y="0" width="210" height="260" rx="10" fill="#e7f0fb" stroke="#2474b5" stroke-width="3"/>
+      <text x="105" y="38" text-anchor="middle" class="slot">槽 1</text>
+      <line x1="0" y1="70" x2="210" y2="70" stroke="#2474b5"/>
+      <line x1="0" y1="165" x2="210" y2="165" stroke="#2474b5"/>
+      <text x="105" y="112" text-anchor="middle" class="small">前半槽 20 MB</text>
+      <text x="105" y="207" text-anchor="middle" class="small">后半槽 20 MB</text>
+      <text x="105" y="244" text-anchor="middle" class="small">BASE + 1 × 40 MB</text>
+      <text x="105" y="300" text-anchor="middle" class="note" fill="#2474b5">PS 正在读取</text>
+    </g>
+
+    <g transform="translate(480,0)">
+      <rect x="0" y="0" width="210" height="260" rx="10" fill="#fff0e5" stroke="#ef7627" stroke-width="4"/>
+      <text x="105" y="38" text-anchor="middle" class="slot">槽 2</text>
+      <line x1="0" y1="70" x2="210" y2="70" stroke="#ef7627"/>
+      <line x1="0" y1="165" x2="210" y2="165" stroke="#ef7627"/>
+      <text x="105" y="112" text-anchor="middle" class="small">前半槽 20 MB</text>
+      <text x="105" y="207" text-anchor="middle" class="small">后半槽 20 MB</text>
+      <text x="105" y="244" text-anchor="middle" class="small">BASE + 2 × 40 MB</text>
+      <text x="105" y="300" text-anchor="middle" class="note" fill="#ef7627">PL 当前写入</text>
+    </g>
+
+    <g transform="translate(720,0)">
+      <rect x="0" y="0" width="210" height="260" rx="10" fill="#eaf7ed" stroke="#1f7a3a" stroke-width="2"/>
+      <text x="105" y="38" text-anchor="middle" class="slot">槽 3</text>
+      <line x1="0" y1="70" x2="210" y2="70" stroke="#1f7a3a"/>
+      <line x1="0" y1="165" x2="210" y2="165" stroke="#1f7a3a"/>
+      <text x="105" y="112" text-anchor="middle" class="small">前半槽 20 MB</text>
+      <text x="105" y="207" text-anchor="middle" class="small">后半槽 20 MB</text>
+      <text x="105" y="244" text-anchor="middle" class="small">BASE + 3 × 40 MB</text>
+    </g>
+
+    <g transform="translate(960,0)">
+      <rect x="0" y="0" width="210" height="260" rx="10" fill="#eaf7ed" stroke="#1f7a3a" stroke-width="2"/>
+      <text x="105" y="38" text-anchor="middle" class="slot">槽 4</text>
+      <line x1="0" y1="70" x2="210" y2="70" stroke="#1f7a3a"/>
+      <line x1="0" y1="165" x2="210" y2="165" stroke="#1f7a3a"/>
+      <text x="105" y="112" text-anchor="middle" class="small">前半槽 20 MB</text>
+      <text x="105" y="207" text-anchor="middle" class="small">后半槽 20 MB</text>
+      <text x="105" y="244" text-anchor="middle" class="small">BASE + 4 × 40 MB</text>
+    </g>
+
+    <line x1="105" y1="-35" x2="1065" y2="-35" stroke="#536277" stroke-width="3" marker-end="url(#arrow)"/>
+    <text x="585" y="-52" text-anchor="middle" class="small">写入方向</text>
+  </g>
+
+  <line x1="680" y1="520" x2="680" y2="470" stroke="#ef7627" stroke-width="4" marker-end="url(#arrow-orange)"/>
+  <text x="680" y="548" text-anchor="middle" class="note" fill="#ef7627">ring_wr_ptr 指向当前正在写入槽的起始地址</text>
+  <text x="680" y="578" text-anchor="middle" class="small">PS 必须避开该槽；写指针离开后，上一槽才成为完整数据</text>
+  <text x="1160" y="548" text-anchor="middle" class="small">槽 4 完成后回到槽 0</text>
+
+  <rect x="205" y="610" width="22" height="22" fill="#e7f0fb" stroke="#2474b5" stroke-width="2"/>
+  <text x="240" y="628" class="small">PS 正在读取</text>
+  <rect x="520" y="610" width="22" height="22" fill="#fff0e5" stroke="#ef7627" stroke-width="2"/>
+  <text x="555" y="628" class="small">PL 当前写入，不可读取</text>
+  <rect x="890" y="610" width="22" height="22" fill="#eaf7ed" stroke="#1f7a3a" stroke-width="2"/>
+  <text x="925" y="628" class="small">非当前写槽；是否未读由 PS 软件记录</text>
+</svg>
+
