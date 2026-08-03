@@ -22,6 +22,7 @@
 
 ### 接口与协议
 
+* [Zynq PL 数据写入 PS DDR 的环形缓存机制](./FPGA/Zynq_PL_to_PS_DDR_Ring_Buffer/Zynq_PL_to_PS_DDR_Ring_Buffer.md)
 * [Vivado SRIO Gen2 IP 解析](./FPGA/Vivado_SRIO_Gen2_IP/Vivado_SRIO_Gen2_IP.md)
 
 ### 时序与工程实践
@@ -43,3 +44,4 @@
 这个仓库会持续整理和更新。文章中的实现方式、工具版本和设计结论，也可能随着后续实践不断补充和修正。
 
 如果文章或代码对你有所帮助，欢迎点一个 Star。也欢迎通过 Issue 交流问题或提出建议。
+
