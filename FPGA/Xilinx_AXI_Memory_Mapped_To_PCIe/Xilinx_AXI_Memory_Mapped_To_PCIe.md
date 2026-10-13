@@ -1,5 +1,8 @@
 # Xilinx AXI Memory Mapped To PCIe 配置与通信流程
 
+> **配套示例工程：** [Xilinx_AXI_PCIe_Guide](https://github.com/Yong12315/Xilinx_AXI_PCIe_Guide)  
+> 仓库提供 RTL、自定义 DMA IP、PS 端配置程序及 Vivado Tcl 恢复脚本；本文介绍对应的 IP 配置、地址映射和通信流程。
+
 本文以 Zynq 与 Jetson 之间的 PCIe 通信为例，介绍 **AXI Memory Mapped To PCI Express 2.9** 的常用配置、双向地址映射，以及自定义 DMA 搬运数据的流程。Jetson 作为主机，Zynq 的 PL 侧作为 PCIe Endpoint；PS 负责控制，PL 负责报文传输。
 
 文中的地址来自配置截图或明确标注的换算示例，移植时需要根据 FPGA 地址规划及 Jetson 驱动实际建立的 DMA 映射进行调整。

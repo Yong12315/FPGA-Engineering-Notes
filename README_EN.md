@@ -29,6 +29,7 @@ In addition to technical content, this repository also includes personal writing
 
 ### Interfaces and Protocols
 
+* [Xilinx AXI Memory Mapped To PCIe: Configuration and Communication Flow (Chinese)](./FPGA/Xilinx_AXI_Memory_Mapped_To_PCIe/Xilinx_AXI_Memory_Mapped_To_PCIe.md) — [Companion Vivado example](https://github.com/Yong12315/Xilinx_AXI_PCIe_Guide)
 * [Zynq PL-to-PS DDR Ring Buffer Mechanism](./FPGA/Zynq_PL_to_PS_DDR_Ring_Buffer/Zynq_PL_to_PS_DDR_Ring_Buffer_EN.md)
 * [Vivado SRIO Gen2 IP Analysis](./FPGA/Vivado_SRIO_Gen2_IP/Vivado_SRIO_Gen2_IP_EN.md)
 * [Xilinx AXI 1G/2.5G Ethernet Subsystem IP Data-Flow Analysis](./FPGA/Xilinx_AXI_Ethernet_Subsystem_IP/Xilinx_AXI_Ethernet_Subsystem_IP_EN.md)
